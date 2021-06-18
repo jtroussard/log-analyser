@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ title }}</h1>
+    </div>
+
+    {% include "flash.html" %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
+        <form class="log-file-input-form" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Log File: </span>
+                </div>
+                <div class="custom-file">
+                    {{ form.file(class="custom-file-input", id="log-file-input-label") }}
+                    {{ form.file.label(class="custom-file-label") }}
+                </div>
+                <div class="ml-4">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </div>
+            {% if form.file.errors %}
+            {% for error in form.file.errors %}
+            <span class="text-danger">{{ error }}</span></br>
+            {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Stacktrace</th>
+                    <th scope="col">Jira Ticket?</th>
+                    <th scope="col">Confluence?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.description }}</td>
+                    <td>make a link/modal/tooltip to reveal this data</td>
+                    <td>make a link/modal/tooltip to reveal this data</td>
+                    {% if item.add_jira_ticket_button %}
+                    <td>
+                        <a href="#" class="btn btn-primary" role="button">Create Jira Ticket</a>
+                    </td>
+                    {% endif %}
+                    {% if item.add_confluence_row %}
+                    <td>
+                        <a href="#" class="btn btn-primary" role="button">Add Log to Confluence Page</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock content %}
